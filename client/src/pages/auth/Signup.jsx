@@ -121,7 +121,7 @@ function Signup() {
     try {
       // Make the API call to register the user
       const response = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        "https://habitualhub.onrender.com/api/auth/signup",
         userData
       );
 
