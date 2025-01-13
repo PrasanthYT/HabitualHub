@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter } from "react-router-dom";
+import AllRoutes from "./AllRoutes";
+import { toast, ToastContainer } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  useEffect(() => {
+    const checkTokenExpiration = () => {
+      const token = sessionStorage.getItem("_token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.exp * 1000 < Date.now()) {
+          sessionStorage.removeItem("_token");
+          toast.info("Session expired. Please login again.");
+          window.location.href = "/auth/signin";
+        }
+      }
+    };
 
+    // Check every minute
+    const interval = setInterval(checkTokenExpiration, 60000);
+
+    // Initial check
+    checkTokenExpiration();
+
+    return () => clearInterval(interval);
+  }, []);
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <ToastContainer />
+      <AllRoutes />
+    </BrowserRouter>
+  );
 }
-
-export default App
