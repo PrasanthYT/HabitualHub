@@ -49,7 +49,7 @@ function Settings() {
 
     try {
       const response = await api.put(
-        `http://localhost:5000/api/auth/edit/${userId}`,
+        `/api/auth/edit/${userId}`,
         {
           currentPassword: formData.currentPassword,
           newPassword: formData.newPassword,

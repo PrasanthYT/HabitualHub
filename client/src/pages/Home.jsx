@@ -10,7 +10,7 @@ function Home() {
   const [copied, setCopied] = useState(false);
 
   const handleCopyToClipboard = () => {
-    const gitCloneCommand = "git clone https://github.com/your-repo.git"; // Replace with your repo URL
+    const gitCloneCommand = "git clone https://github.com/PrasanthYT/HabitualHub.git"; // Replace with your repo URL
     navigator.clipboard.writeText(gitCloneCommand).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000); // Reset copied state after 2 seconds
@@ -189,7 +189,7 @@ function Home() {
             >
               {copied
                 ? "Copied!"
-                : "git clone https://github.com/your-repo.git"}
+                : "git clone https://github.com/PrasanthYT/HabitualHub.git"}
               <span className="flex justify-center items-center bg-gray-200 rounded-md size-7">
                 <svg
                   className="shrink-0 size-4 group-hover:rotate-6 transition"
